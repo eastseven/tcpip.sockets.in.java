@@ -1,10 +1,12 @@
 package cn.eastseven.tcpip.sockets.in.java;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketException;
 import java.util.Enumeration;
 
@@ -32,6 +34,24 @@ public class TcpServer {
 	
 	public void start() {
 		this.init();
+		log.info("server running");
+		while(true) {
+			try {
+				Socket socket = ser.accept();
+				log.info("client connect: " + socket);
+				InputStream in = socket.getInputStream();
+				int receive = -1;
+				String value = "";
+				while((receive = in.read()) != -1) {
+					value += "," + receive;
+				}
+				in.close();
+				socket.close();
+				log.info("client disconnect, receive value: " + value);
+			} catch (IOException e) {
+				log.error(e);
+			}
+		}
 	}
 	
 	public void bindInetAddress() {
