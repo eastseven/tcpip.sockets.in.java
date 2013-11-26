@@ -40,6 +40,19 @@
 			<artifactId>commons-configuration</artifactId>
 			<version>1.9</version>
 		</dependency>
+		<!-- <dependency> <groupId>org.apache.jmeter</groupId> <artifactId>ApacheJMeter_tcp</artifactId> 
+			<version>2.10</version> <scope>test</scope> </dependency> -->
+		<dependency>
+			<groupId>com.lazerycode.jmeter</groupId>
+			<artifactId>jmeter-maven-plugin</artifactId>
+			<version>1.8.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.5</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -73,6 +86,20 @@
 								</transformer>
 							</transformers>
 						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.lazerycode.jmeter</groupId>
+				<artifactId>jmeter-maven-plugin</artifactId>
+				<version>1.8.1</version>
+				<executions>
+					<execution>
+						<id>jmeter-tests</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jmeter</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.5" jmeter="2.10 r1533061">
+  <hashTree>
+    <TCPSampler guiclass="TCPSamplerGui" testclass="TCPSampler" testname="TCPClientTest" enabled="true">
+      <stringProp name="TCPSampler.server">10.10.10.77</stringProp>
+      <boolProp name="TCPSampler.reUseConnection">true</boolProp>
+      <stringProp name="TCPSampler.port">9527</stringProp>
+      <boolProp name="TCPSampler.nodelay">false</boolProp>
+      <stringProp name="TCPSampler.timeout">1000</stringProp>
+      <stringProp name="TCPSampler.ctimeout">1000</stringProp>
+      <stringProp name="TCPSampler.request">hello jmeter tcp test</stringProp>
+      <boolProp name="TCPSampler.closeConnection">true</boolProp>
+      <stringProp name="ConfigTestElement.username"></stringProp>
+      <stringProp name="ConfigTestElement.password"></stringProp>
+    </TCPSampler>
+    <hashTree/>
+  </hashTree>
+</jmeterTestPlan>
