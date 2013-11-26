@@ -1,5 +1,6 @@
 package cn.eastseven.tcpip.sockets.in.java;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Inet4Address;
@@ -40,14 +41,17 @@ public class TcpServer {
 				Socket socket = ser.accept();
 				log.info("client connect: " + socket);
 				InputStream in = socket.getInputStream();
-				int receive = -1;
 				String value = "";
-				while((receive = in.read()) != -1) {
-					value += "," + receive;
+				byte[] data = new byte[32];
+				BufferedOutputStream buf = new BufferedOutputStream(socket.getOutputStream());
+				int count = 0;
+				while(in.read(data) != -1) {
+					log.info(new String(data));
+					count++;
 				}
 				in.close();
 				socket.close();
-				log.info("client disconnect, receive value: " + value);
+				log.info("client disconnect, receive value: " + count);
 			} catch (IOException e) {
 				log.error(e);
 			}

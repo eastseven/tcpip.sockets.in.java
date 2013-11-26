@@ -5,9 +5,6 @@ import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.util.Date;
 
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.log4j.Logger;
 import org.apache.mina.core.service.IoAcceptor;
 import org.apache.mina.core.service.IoHandlerAdapter;
@@ -22,20 +19,13 @@ public class MinaTcpServer {
 
 	private static final Logger log = Logger.getLogger(MinaTcpServer.class);
 
-	private Configuration conf = null;
+	@SuppressWarnings("unused")
 	private String SERVER_HOST = null;
 	private int SERVER_PORT = 0;
 
 	public void loadConfig() {
-		try {
-			conf = new PropertiesConfiguration("app.properties");
-			log.info("app.properties load complete");
-			SERVER_HOST = conf.getString("tcp.server.ip");
-			SERVER_PORT = conf.getInt("tcp.server.port");
-			log.info("server host: " + SERVER_HOST + ", port: " + SERVER_PORT);
-		} catch (ConfigurationException e) {
-			e.printStackTrace();
-		}
+		SERVER_HOST = ConfigFileUtils.SERVER_HOST;
+		SERVER_PORT = ConfigFileUtils.SERVER_PORT;
 	}
 
 	public void start() {
@@ -56,8 +46,7 @@ public class MinaTcpServer {
 
 	class TimeServerHandler extends IoHandlerAdapter {
 		@Override
-		public void exceptionCaught(IoSession session, Throwable cause)
-				throws Exception {
+		public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
 			cause.printStackTrace();
 		}
 
@@ -70,12 +59,11 @@ public class MinaTcpServer {
 			}
 			Date date = new Date();
 			session.write(date.toString());
-			System.out.println("Message written...");
+			log.debug(str);
 		}
 
 		@Override
-		public void sessionIdle(IoSession session, IdleStatus status)
-				throws Exception {
+		public void sessionIdle(IoSession session, IdleStatus status) throws Exception {
 			System.out.println("IDLE " + session.getIdleCount(status));
 		}
 	}
